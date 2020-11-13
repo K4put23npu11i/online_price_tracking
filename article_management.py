@@ -10,9 +10,9 @@ import utilities as utils
 
 def add_article_to_shopping_list(articles: dict, art_link: str, user_id: str, price_limit: float):
     new_id = utils.create_new_id(id_type="article")
-    articles[new_id] = {"article_name": new_id + "_WORK_IN_PROGRESS",
+    articles[new_id] = {"article_name": new_id,
                         "article_link": art_link,
-                        "shopping_plattform": "_WORK_IN_PROGRESS",
+                        "shopping_platform": get_shopping_platform_by_link(art_link),
                         "price_limit": [{user_id: price_limit}]
                         }
     logging.debug(f"New article created with id: {new_id}")
@@ -72,11 +72,20 @@ def save_shopping_articles_from_json_to_file(articles: dict):
     return None
 
 
+def get_shopping_platform_by_link(link: str) -> str:
+    platform = ""
+    if "amazon" in link:
+        platform = "Amazon"
+
+    return platform
+
+
 def create_some_dummy_articles():
     articles = {}
-    articles = add_article_to_shopping_list(articles=articles, art_link="Link1", user_id="u_001", price_limit=30.0)
-    articles = add_article_to_shopping_list(articles=articles, art_link="Link2", user_id="u_002", price_limit=50.0)
-    articles = add_article_to_shopping_list(articles=articles, art_link="Link3", user_id="u_004", price_limit=90.0)
+    articles = add_article_to_shopping_list(articles=articles, art_link="https://www.amazon.de/dp/B084DWG2VQ",
+                                            user_id="u_001", price_limit=50.0)
+    articles = add_article_to_shopping_list(articles=articles, art_link="https://www.amazon.de/dp/B07Y9D3XX1",
+                                            user_id="u_002", price_limit=15.0)
     return articles
 
 

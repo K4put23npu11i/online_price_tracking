@@ -9,7 +9,7 @@ import utilities as utils
 
 
 def create_new_user(users: dict, name: str, mail: str, article_note: bool, overview_note: bool):
-    new_id = utils.create_new_id(users, "users")
+    new_id = utils.create_new_id(id_type="users")
     users[new_id] = {"name": name,
                      "mail": mail,
                      "article_notification": article_note,
