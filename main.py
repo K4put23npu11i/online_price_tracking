@@ -55,7 +55,7 @@ def scrape_all_articles(arts: dict):
 
 
 def main():
-    users = user_mngmt.read_users_from_file_to_json()
+    users = user_mngmt.load_users_from_disc()
     articles = art_mngmt.read_shopping_articles_from_file_to_json()
 
     scrape_all_articles(arts=articles)

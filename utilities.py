@@ -46,10 +46,13 @@ def read_file(base_path: str, filename: str, file_type: str):
 
 
 def check_if_file_exists_in_directory(path: str, filename: str) -> bool:
-    all_files = os.listdir(path)
-    if filename in all_files:
-        return True
-    else:
+    try:
+        all_files = os.listdir(path)
+        if filename in all_files:
+            return True
+        else:
+            return False
+    except:
         return False
 
 
@@ -58,13 +61,14 @@ def read_csv_from_disc(path: str, filename: str) -> pd.DataFrame:
         filename += ".csv"
 
     path = os.path.join(path, filename)
-    df = pd.read_csv(path)
+    df = pd.read_csv(path, index_col=0)
     return df
 
 
 def write_dataframe_to_disc_as_csv(path: str, filename: str, content: pd.DataFrame):
     if ".csv" not in filename:
         filename += ".csv"
-
+    if not os.path.exists(path):
+        os.makedirs(path)
     path = os.path.join(path, filename)
     content.to_csv(path)
